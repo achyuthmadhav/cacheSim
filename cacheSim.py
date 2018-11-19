@@ -52,26 +52,26 @@ class CacheSim:
         print "Cache Simulation Complete ...\n"
 
     def find_in_cache(self, cache, index, tag):
-        for set in range(len(self.cache)):
-            if cache[set]["index"] == index:
+        for cache_set in range(self.setsCount):
+            if cache[cache_set]["index"] == index:
                 for line in range(self.ways):
-                    if cache[set]["lines"][line]["tag"] == tag:
+                    if cache[cache_set]["lines"][line]["tag"] == tag:
                         self.hits += 1
-                        usedLine = cache[set]["lines"][line]
-                        cache[set]["lines"].pop(line)
-                        cache[set]["lines"].insert(0, usedLine)
-                        usedSet = cache[set]
-                        cache.pop(set)
+                        usedLine = cache[cache_set]["lines"][line]
+                        cache[cache_set]["lines"].pop(line)
+                        cache[cache_set]["lines"].insert(0, usedLine)
+                        usedSet = cache[cache_set]
+                        cache.pop(cache_set)
                         cache.insert(0, usedSet)
                         return
                 self.misses += 1
                 self.victim_cache_check(self.victimCache, index, tag)
                 newLine = self.new_cache_line(tag)
-                lru_Line = cache[set]["lines"].pop()
+                lru_Line = cache[cache_set]["lines"].pop()
                 self.victim_cache_push(index, lru_Line["tag"])
-                cache[set]["lines"].insert(0, newLine)
-                usedSet = cache[set]
-                cache.pop(set)
+                cache[cache_set]["lines"].insert(0, newLine)
+                usedSet = cache[cache_set]
+                cache.pop(cache_set)
                 cache.insert(0, usedSet)
                 return
         self.misses += 1
