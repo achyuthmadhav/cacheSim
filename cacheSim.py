@@ -1,9 +1,6 @@
 import math
 import argparse
 
-inputFile = 1
-
-
 class CacheSim:
     blockSizeList = {2, 4, 8, 16, 32, 64}
     waysList = {0, 1, 2, 4, 8, 16}
